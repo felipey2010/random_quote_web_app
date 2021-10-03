@@ -11,6 +11,7 @@ export default function App() {
     content: "",
     author: "",
   });
+  const [error, setError] = useState(false);
 
   function getRandomColor() {
     var letters = "0123456789ABCDEF";
@@ -36,12 +37,15 @@ export default function App() {
               content: result.data.content,
               author: result.data.author,
             });
-            setLoading(false);
+            setError(false);
           })
 
           .catch(error => {
-            setLoading(true);
             console.log(error);
+            setError(true);
+          })
+          .finally(() => {
+            setLoading(false);
           });
       };
       fetch();
@@ -51,26 +55,67 @@ export default function App() {
 
   useEffect(() => {
     getRandomQuote();
-
     // eslint-disable-next-line
   }, []);
 
+  if (error) {
+    return (
+      <div className="App" style={{ backgroundColor: `${color}` }}>
+        {loading ? (
+          <HashLoader size={50} color="#fff" />
+        ) : (
+          <div className="card container">
+            <h4 className="card-text">Failed to get quotes</h4>
+
+            <p className="text-muted text-center card-subtitle"></p>
+            {/* <br /> */}
+            <Button
+              getRandomQuote={getRandomQuote}
+              color={color}
+              text={"Try Again"}
+            />
+          </div>
+        )}
+        <p className="position-absolute bottom-0 start-50 translate-middle footer-text">
+          Made with ❤️ by{" "}
+          <a
+            href="https://portfolio-philip.vercel.app/"
+            target="_blank"
+            rel="noreferrer">
+            Felipey
+          </a>
+        </p>
+      </div>
+    );
+  }
   return (
     <div className="App" style={{ backgroundColor: `${color}` }}>
       {loading ? (
         <HashLoader size={50} color="#fff" />
       ) : (
         <div className="card container">
-          <h4 className="card-body">
-            <strong>
-              <em>"{data.content}"</em>
-            </strong>
-          </h4>
+          {data.content.length > 250 ? (
+            <h4 className="card-text card-overflow">
+              <strong>
+                <em>"{data.content}"</em>
+              </strong>
+            </h4>
+          ) : (
+            <h4 className="card-text">
+              <strong>
+                <em>"{data.content}"</em>
+              </strong>
+            </h4>
+          )}
           <p className="text-muted text-center card-subtitle">
             -{data.author}-
           </p>
           {/* <br /> */}
-          <Button getRandomQuote={getRandomQuote} color={color} />
+          <Button
+            getRandomQuote={getRandomQuote}
+            color={color}
+            text={"Get Quote"}
+          />
         </div>
       )}
       <p className="position-absolute bottom-0 start-50 translate-middle footer-text">
