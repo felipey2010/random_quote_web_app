@@ -9,3 +9,5 @@ With the interface, [bootsrap](https://getbootstrap.com/) is used to facilitate 
 ## Future works
 
 Add share buttons
+
+Automatically change the text colors too
