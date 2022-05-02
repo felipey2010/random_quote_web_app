@@ -43,7 +43,7 @@
   border: 3px solid rgba(0, 0, 0, 0.5);
   outline: none;
   color: white;
-  background-color: inherit;
+  background-color: rgb(1, 7, 16);
 }
 
 .card-text {
