@@ -71,29 +71,17 @@ export default function Home({ loading, color, data, error, getRandomQuote }) {
 }
 
 const CardComponent = forwardRef((props, ref) => (
-  <div ref={ref} className="card">
+  <div ref={ref} className="custom-card">
     <div
       className="card-content"
       style={{
-        backgroundColor: "black",
-        padding: "16px",
-        height: "100%",
-        width: "100%",
-        color: "white",
+        backgroundColor: `${props.color}`,
       }}>
-      {props.data.content.length > 250 ? (
-        <h4 className="card-text card-overflow">
-          <strong>
-            <em>"{props.data.content}"</em>
-          </strong>
-        </h4>
-      ) : (
-        <h4 className="card-text">
-          <strong>
-            <em>"{props.data.content}"</em>
-          </strong>
-        </h4>
-      )}
+      <h4 className="card-text">
+        <strong>
+          <em>"{props.data.content}"</em>
+        </strong>
+      </h4>
       <p className="text-muted text-center card-subtitle">
         -{props.data.author}-
       </p>
