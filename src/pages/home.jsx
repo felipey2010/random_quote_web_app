@@ -73,6 +73,7 @@ export default function Home({ loading, color, data, error, getRandomQuote }) {
 const CardComponent = forwardRef((props, ref) => (
   <div ref={ref} className="card">
     <div
+      className="card-content"
       style={{
         backgroundColor: "white",
         padding: "16px",
