@@ -1,8 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import "./styles/App.css";
 import axios from "axios";
-import { HashLoader } from "react-spinners";
-import Button from "./components/button";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import Home from "./pages/home";
 
 export default function App() {
   const [loading, setLoading] = useState(true);
@@ -26,11 +26,11 @@ export default function App() {
   }
 
   async function getRandomQuote() {
-    setLoading(true);
     getRandomColor();
+    setLoading(true);
     const timeoutId = setTimeout(() => {
       const fetch = async () => {
-        axios
+        await axios
           .get("https://api.quotable.io/random")
           .then(result => {
             setData({
@@ -52,81 +52,24 @@ export default function App() {
     }, 500);
     return () => clearTimeout(timeoutId);
   }
-
-  useEffect(() => {
-    getRandomQuote();
-    // eslint-disable-next-line
-  }, []);
-
-  if (error) {
-    return (
-      <div className="App" style={{ backgroundColor: `${color}` }}>
-        {loading ? (
-          <HashLoader size={50} color="#fff" />
-        ) : (
-          <div className="card container">
-            <h4 className="card-text">Failed to get quotes</h4>
-
-            <p className="text-muted text-center card-subtitle"></p>
-            {/* <br /> */}
-            <Button
-              getRandomQuote={getRandomQuote}
-              color={color}
-              text={"Try Again"}
-            />
-          </div>
-        )}
-        <p className="position-absolute bottom-0 start-50 translate-middle footer-text">
-          Made with ❤️ by{" "}
-          <a
-            href="https://portfolio-philip.vercel.app/"
-            target="_blank"
-            rel="noreferrer">
-            Felipey
-          </a>
-        </p>
-      </div>
-    );
-  }
   return (
-    <div className="App" style={{ backgroundColor: `${color}` }}>
-      {loading ? (
-        <HashLoader size={50} color="#fff" />
-      ) : (
-        <div className="card container">
-          {data.content.length > 250 ? (
-            <h4 className="card-text card-overflow">
-              <strong>
-                <em>"{data.content}"</em>
-              </strong>
-            </h4>
-          ) : (
-            <h4 className="card-text">
-              <strong>
-                <em>"{data.content}"</em>
-              </strong>
-            </h4>
-          )}
-          <p className="text-muted text-center card-subtitle">
-            -{data.author}-
-          </p>
-          {/* <br /> */}
-          <Button
-            getRandomQuote={getRandomQuote}
-            color={color}
-            text={"Get Quote"}
-          />
-        </div>
-      )}
-      <p className="position-absolute bottom-0 start-50 translate-middle footer-text">
-        Made with ❤️ by{" "}
-        <a
-          href="https://portfolio-philip.vercel.app/"
-          target="_blank"
-          rel="noreferrer">
-          Felipey
-        </a>
-      </p>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route
+          path="/"
+          exact
+          element={
+            <Home
+              loading={loading}
+              color={color}
+              data={data}
+              error={error}
+              getRandomQuote={getRandomQuote}
+            />
+          }
+        />
+        <Route path="*" element={<Navigate to="/" />} />
+      </Routes>
+    </BrowserRouter>
   );
 }

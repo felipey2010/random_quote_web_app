@@ -2,32 +2,54 @@
 
 .App {
   height: 100vh;
+  margin: 0;
+  padding: 0;
   text-align: center;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+  position: relative;
+  transition: all 0.3s ease-in-out;
+}
+
+.canvas-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  border: 1px solid #fff;
+  border-radius: 10px;
+  box-shadow: 0px 0px 1px 0px black;
 }
 
 .App h4 {
   font-family: "Bree Serif", serif;
+  background-color: transparent;
 }
 
 .App button {
   margin: 8px;
+  padding: 8px;
+  font-size: 14px;
+  border-radius: 4px;
+  border: 1px solid black;
+  color: black;
+  font-weight: 600;
+  background-color: #fff;
 }
 
 .card {
   width: 50%;
   box-shadow: 0px 0px 1px 0px black;
   transition: box-shadow 0.2s ease-out;
-}
-
-.card:hover {
-  box-shadow: 0px 0px 9px 0px black;
+  background-color: #fff;
 }
 
 .card-text {
   margin-bottom: 0;
+  background-color: #fff;
 }
 
 .text-muted {
@@ -36,7 +58,42 @@
 }
 
 .footer-text {
-  color: #fff;
+  text-decoration: none;
+  transition: all 0.3s ease-in-out;
+}
+
+.footer-text:hover {
+  color: rgba(0, 0, 0, 0.7) !important;
+}
+
+.share-button {
+  background-color: #fff;
+  border-radius: 4px;
+  padding: 2px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: black;
+  height: 100%;
+  width: 34px;
+  border: 1px solid black;
+  color: black;
+  font-weight: 600;
+}
+
+.button-div {
+  height: 40px;
+  margin: 8px 0;
+}
+
+.font-13 {
+  font-size: 13px;
+  border-top: 1px solid #0000001c;
+  color: rgba(0, 0, 0, 0.7);
+  margin-top: 4px;
 }
 
 @media (max-width: 870px) {

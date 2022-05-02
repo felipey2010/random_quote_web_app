@@ -1,12 +1,9 @@
-export default function Button({ getRandomQuote, color, text }) {
+export default function Button({ getRandomQuote, text }) {
   return (
-    <idv>
-      <button
-        className="btn"
-        style={{ backgroundColor: `${color}`, color: "#fff" }}
-        onClick={() => getRandomQuote()}>
+    <div>
+      <button className="btn" onClick={() => getRandomQuote()}>
         {text}
       </button>
-    </idv>
+    </div>
   );
 }
