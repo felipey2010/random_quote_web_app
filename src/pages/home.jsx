@@ -75,10 +75,11 @@ const CardComponent = forwardRef((props, ref) => (
     <div
       className="card-content"
       style={{
-        backgroundColor: "white",
+        backgroundColor: "black",
         padding: "16px",
         height: "100%",
         width: "100%",
+        color: "white",
       }}>
       {props.data.content.length > 250 ? (
         <h4 className="card-text card-overflow">
@@ -102,7 +103,7 @@ const CardComponent = forwardRef((props, ref) => (
           href="https://dev-portfolio-philip.vercel.app/"
           target="_blank"
           rel="noreferrer"
-          style={{ color: "red" }}
+          style={{ color: "#ff0319c7" }}
           className="footer-text">
           Felipey
         </a>
