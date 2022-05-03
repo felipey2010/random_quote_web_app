@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import "./styles/App.css";
 import axios from "axios";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
@@ -12,6 +12,8 @@ export default function App() {
     author: "",
   });
   const [error, setError] = useState(false);
+
+  let flag = 0;
 
   function getRandomColor() {
     var letters = "0123456789ABCDEF";
@@ -52,6 +54,28 @@ export default function App() {
     }, 500);
     return () => clearTimeout(timeoutId);
   }
+
+  useEffect(() => {
+    if (flag === 0) {
+      //First time loading
+      setColor(localStorage.getItem("random-quote-color") ?? "#4a4949cc");
+      var stored = JSON.parse(localStorage.getItem("random-quote-text"));
+
+      if (stored.content.length === 0) {
+        getRandomQuote();
+      } else {
+        setData(stored);
+      }
+      flag = 1;
+    }
+    if (data) {
+      setLoading(false);
+      localStorage.setItem("random-quote-text", JSON.stringify(data));
+      localStorage.setItem("random-quote-color", color);
+    }
+    // eslint-disable-next-line
+  }, []);
+
   return (
     <BrowserRouter>
       <Routes>

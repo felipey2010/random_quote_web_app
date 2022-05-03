@@ -9,7 +9,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: center;
   transition: all 0.3s ease-in-out;
   overflow-y: auto;
   vertical-align: middle;
@@ -20,20 +20,18 @@
   background-color: transparent;
 }
 
-.App button {
-  margin: 8px;
-  padding: 8px;
-  font-size: 14px;
-  border-radius: 4px;
-  border: 1px solid black;
-  color: black;
-  font-weight: 600;
-  background-color: #fff;
-}
-
 .custom-card {
   width: 50%;
   display: flex;
+  padding: 8px;
+  align-items: center;
+  justify-content: center;
+}
+
+.card {
+  box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.05), 0px 1px 4px rgba(0, 0, 0, 0.15);
+  padding: 12px;
+  margin: 12px;
 }
 
 .card-content {
@@ -63,7 +61,24 @@
 }
 
 .footer-text:hover {
-  color: rgba(255, 255, 255, 0.7) !important;
+  color: rgba(255, 5, 5, 1) !important;
+}
+
+.btn {
+  margin: 8px;
+  padding: 8px;
+  font-size: 14px;
+  border-radius: 0.25rem;
+  border: 2px solid rgba(0, 0, 0, 0.25);
+  font-weight: 600;
+  background-color: #fff;
+  transition: all 0.3s ease-in-out;
+}
+
+.btn:hover,
+.share-button:hover {
+  color: rgba(0, 0, 0, 0.8) !important;
+  border: 2px solid rgba(0, 0, 0, 0.35);
 }
 
 .share-button {
@@ -79,8 +94,13 @@
   height: 100%;
   width: 34px;
   border: 1px solid black;
-  color: black;
+  color: #6c757d;
   font-weight: 600;
+  border-radius: 0.25rem;
+  border: 2px solid rgba(0, 0, 0, 0.25);
+  font-weight: 600;
+  background-color: #fff;
+  transition: all 0.3s ease-in-out;
 }
 
 .button-div {
@@ -88,12 +108,11 @@
   margin-top: 16px;
 }
 
-.font-13 {
+.created-text {
   font-size: 13px;
-  border-top: 1px solid #ffffff1a;
-  color: rgba(255, 255, 255, 0.7);
-  margin-top: 12px;
-  padding-top: 16px;
+  border-top: 1px solid #36353521;
+  color: rgba(0, 0, 0, 0.7);
+  padding: 4px;
 }
 
 @media (max-width: 870px) {
@@ -104,11 +123,7 @@
 
 @media (max-width: 650px) {
   .custom-card {
-    width: 85%;
-  }
-
-  .card-content {
-    margin-top: 19px;
+    width: 75%;
   }
 }
 @media (max-width: 430px) {

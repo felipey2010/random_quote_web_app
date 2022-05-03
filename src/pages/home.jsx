@@ -1,51 +1,50 @@
-import { useEffect, useRef, useState, forwardRef } from "react";
+import { useRef, forwardRef } from "react";
 import { HashLoader } from "react-spinners";
 import Button from "../components/button";
 import { AiOutlineDownload } from "react-icons/ai";
-// import Footer from "../components/footer";
-import { exportComponentAsJPEG } from "react-component-export-image";
 import { nanoid } from "nanoid";
+import { toPng } from "html-to-image";
 
 export default function Home({ loading, color, data, error, getRandomQuote }) {
-  const [shareActivated, setShareActivated] = useState(false);
-  const [visited, setVisited] = useState(0);
   const ref = useRef();
 
   let props = {
     data: data,
-    shareData: shareData,
-    shareActivated: shareActivated,
     color: color,
   };
 
   async function shareData() {
-    setShareActivated(true);
     var fileName = "quote_" + nanoid();
-    exportComponentAsJPEG(ref, { fileName });
+    var node = document.getElementById("download-card");
+
+    toPng(node)
+      .then(dataUrl => {
+        const link = document.createElement("a");
+        link.download = `${fileName}.png`;
+        link.href = dataUrl;
+        link.click();
+      })
+      .catch(err => {
+        console.error(err);
+      });
   }
-
-  useEffect(() => {
-    if (visited === 0) {
-      getRandomQuote();
-      setVisited(visited + 1);
-    }
-
-    const timeoutId = setTimeout(() => {
-      setShareActivated(false);
-    }, 1000);
-    return () => clearTimeout(timeoutId);
-    // eslint-disable-next-line
-  }, [shareActivated]);
 
   return (
     <div className="App" style={{ backgroundColor: `${color}` }}>
       {error ? (
-        <div className="card container">
-          <h4 className="card-text">Failed to get quotes</h4>
+        <>
+          <div className="card">
+            <h4 className="card-text">Failed to get quotes</h4>
+            <h4 className="card-text text-muted">Please, refresh page</h4>
 
-          <p className="text-muted text-center card-subtitle"></p>
-          {/* <br /> */}
-        </div>
+            <p className="text-muted text-center card-subtitle">
+              Or click on button below
+            </p>
+          </div>
+          <div className="d-flex align-items-center justify-content-center w-100 button-div">
+            <Button getRandomQuote={getRandomQuote} text={"Get Quote"} />
+          </div>
+        </>
       ) : (
         <>
           {loading ? (
@@ -55,9 +54,7 @@ export default function Home({ loading, color, data, error, getRandomQuote }) {
               <CardComponent ref={ref} {...props} />
               <div className="d-flex align-items-center justify-content-center w-100 button-div">
                 <Button getRandomQuote={getRandomQuote} text={"Get Quote"} />
-                <span
-                  className="share-button"
-                  onClick={() => props.shareData()}>
+                <span className="share-button" onClick={() => shareData()}>
                   <AiOutlineDownload />
                 </span>
               </div>
@@ -71,21 +68,21 @@ export default function Home({ loading, color, data, error, getRandomQuote }) {
 }
 
 const CardComponent = forwardRef((props, ref) => (
-  <div ref={ref} className="custom-card">
-    <div
-      className="card-content"
-      style={{
-        backgroundColor: `${props.color}`,
-      }}>
+  <div
+    id="download-card"
+    ref={ref}
+    className="custom-card"
+    style={{ backgroundColor: `${props.color}` }}>
+    <div className="card">
       <h4 className="card-text">
         <strong>
           <em>"{props.data.content}"</em>
         </strong>
       </h4>
       <p className="text-muted text-center card-subtitle">
-        -{props.data.author}-
+        --- {props.data.author} ---
       </p>
-      <p className="card-subtitle font-13">
+      <p className="card-subtitle created-text">
         Created with <span style={{ color: "red" }}>❤️ </span> by{" "}
         <a
           href="https://dev-portfolio-philip.vercel.app/"
