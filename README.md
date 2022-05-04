@@ -25,7 +25,7 @@
 </ul><ul>
 <li>Persistence of quote in local storage</li>
 </ul><h2>Screenshots</h2>
-<hr><p><img src="" alt=""></p><p><img src="" alt=""></p><h2>Usage</h2>
+<hr><p><img src="https://raw.githubusercontent.com/felipey2010/random_quote_web_app/master/public/screenshots/desktop.PNG" alt="desktop web"></p><p><img src="https://github.com/felipey2010/random_quote_web_app/blob/master/public/screenshots/downloaded_mobile.png?raw=true" alt="mobile downloaded image"></p><p><img src="https://github.com/felipey2010/random_quote_web_app/blob/master/public/screenshots/downloaded_pc.png?raw=true" alt="mobile downloaded image"></p><h2>Usage</h2>
 <hr><p>To access locally, clone the project or access the live <a href="javascript:void(0)">demo</a></p><h5>Code Examples</h5><ul>
 <li>Install dependencies</li>
 </ul><p><code>npm install or yarn install</code></p><ul>
