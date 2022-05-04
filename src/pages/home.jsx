@@ -1,11 +1,14 @@
-import { useRef, forwardRef } from "react";
+import { useRef, forwardRef, useContext } from "react";
 import { HashLoader } from "react-spinners";
 import Button from "../components/button";
 import { AiOutlineDownload } from "react-icons/ai";
 import { nanoid } from "nanoid";
 import { toPng } from "html-to-image";
+import { AppContext } from "../utils/Context";
 
-export default function Home({ loading, color, data, error, getRandomQuote }) {
+export default function Home() {
+  const { loading, color, data, error, getRandomQuote } =
+    useContext(AppContext);
   const ref = useRef();
 
   let props = {

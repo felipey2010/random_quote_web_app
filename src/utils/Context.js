@@ -1,10 +1,9 @@
-import { useState, useEffect } from "react";
-import "./styles/App.css";
+import { useState, createContext, useEffect } from "react";
 import axios from "axios";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import Home from "./pages/home";
 
-export default function App() {
+export const AppContext = createContext({});
+
+const AppProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [color, setColor] = useState("");
   const [data, setData] = useState({
@@ -78,26 +77,18 @@ export default function App() {
     }
     // eslint-disable-next-line
   }, []);
-
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route
-          path="/"
-          exact
-          element={
-            <Home
-              loading={loading}
-              setLoading={setLoading}
-              color={color}
-              data={data}
-              error={error}
-              getRandomQuote={getRandomQuote}
-            />
-          }
-        />
-        <Route path="*" element={<Navigate to="/" />} />
-      </Routes>
-    </BrowserRouter>
+    <AppContext.Provider
+      value={{
+        loading,
+        color,
+        data,
+        error,
+        getRandomQuote,
+      }}>
+      {children}
+    </AppContext.Provider>
   );
-}
+};
+
+export default AppProvider;
