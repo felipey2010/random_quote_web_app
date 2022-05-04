@@ -76,7 +76,6 @@ export default function App() {
       setData(stored);
       setLoading(false);
     }
-
     // eslint-disable-next-line
   }, []);
 
