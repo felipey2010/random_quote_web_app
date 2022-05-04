@@ -5,7 +5,14 @@ import { AiOutlineDownload } from "react-icons/ai";
 import { nanoid } from "nanoid";
 import { toPng } from "html-to-image";
 
-export default function Home({ loading, color, data, error, getRandomQuote }) {
+export default function Home({
+  loading,
+  setLoading,
+  color,
+  data,
+  error,
+  getRandomQuote,
+}) {
   const ref = useRef();
 
   let props = {

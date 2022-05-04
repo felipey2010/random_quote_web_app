@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import "./styles/App.css";
 import axios from "axios";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
@@ -13,7 +13,7 @@ export default function App() {
   });
   const [error, setError] = useState(false);
 
-  let flag = 0;
+  const [flag, setFlag] = useState(0);
 
   function getRandomColor() {
     var letters = "0123456789ABCDEF";
@@ -24,32 +24,38 @@ export default function App() {
     }
 
     if (color[1].toLowerCase() === "f") getRandomColor();
-    else setColor(color);
+    else {
+      setColor(color);
+      localStorage.setItem("random-quote-color", color);
+    }
   }
+
+  const fetch = async () => {
+    await axios
+      .get("https://api.quotable.io/random")
+      .then(result => {
+        const quote = {
+          content: result.data.content,
+          author: result.data.author,
+        };
+        setData(quote);
+        localStorage.setItem("random-quote-text", JSON.stringify(quote));
+        setError(false);
+      })
+
+      .catch(error => {
+        console.log(error);
+        setError(true);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
 
   async function getRandomQuote() {
     getRandomColor();
     setLoading(true);
     const timeoutId = setTimeout(() => {
-      const fetch = async () => {
-        await axios
-          .get("https://api.quotable.io/random")
-          .then(result => {
-            setData({
-              content: result.data.content,
-              author: result.data.author,
-            });
-            setError(false);
-          })
-
-          .catch(error => {
-            console.log(error);
-            setError(true);
-          })
-          .finally(() => {
-            setLoading(false);
-          });
-      };
       fetch();
     }, 500);
     return () => clearTimeout(timeoutId);
@@ -59,20 +65,18 @@ export default function App() {
     if (flag === 0) {
       //First time loading
       setColor(localStorage.getItem("random-quote-color") ?? "#4a4949cc");
-      var stored = JSON.parse(localStorage.getItem("random-quote-text"));
+      let stored = JSON.parse(localStorage.getItem("random-quote-text"));
 
-      if (stored.content.length === 0) {
+      if (stored === null) {
         getRandomQuote();
-      } else {
-        setData(stored);
+        setFlag(flag + 1);
+        return;
       }
-      flag = 1;
-    }
-    if (data) {
+
+      setData(stored);
       setLoading(false);
-      localStorage.setItem("random-quote-text", JSON.stringify(data));
-      localStorage.setItem("random-quote-color", color);
     }
+
     // eslint-disable-next-line
   }, []);
 
@@ -85,6 +89,7 @@ export default function App() {
           element={
             <Home
               loading={loading}
+              setLoading={setLoading}
               color={color}
               data={data}
               error={error}
