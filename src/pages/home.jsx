@@ -1,35 +1,34 @@
-import { useRef, forwardRef, useContext } from "react";
-import { HashLoader } from "react-spinners";
-import Button from "../components/button";
-import { AiOutlineDownload } from "react-icons/ai";
-import { nanoid } from "nanoid";
-import { toPng } from "html-to-image";
-import { AppContext } from "../utils/Context";
+import { useRef, forwardRef, useContext } from "react"
+import { HashLoader } from "react-spinners"
+import Button from "../components/button"
+import { AiOutlineDownload } from "react-icons/ai"
+import { nanoid } from "nanoid"
+import { toPng } from "html-to-image"
+import { AppContext } from "../utils/Context"
 
 export default function Home() {
-  const { loading, color, data, error, getRandomQuote } =
-    useContext(AppContext);
-  const ref = useRef();
+  const { loading, color, data, error, getRandomQuote } = useContext(AppContext)
+  const ref = useRef()
 
   let props = {
     data: data,
     color: color,
-  };
+  }
 
   async function shareData() {
-    var fileName = "quote_" + nanoid();
-    var node = document.getElementById("download-card");
+    var fileName = "quote_" + nanoid()
+    var node = document.getElementById("download-card")
 
     toPng(node)
       .then(dataUrl => {
-        const link = document.createElement("a");
-        link.download = `${fileName}.png`;
-        link.href = dataUrl;
-        link.click();
+        const link = document.createElement("a")
+        link.download = `${fileName}.png`
+        link.href = dataUrl
+        link.click()
       })
       .catch(err => {
-        console.error(err);
-      });
+        console.error(err)
+      })
   }
 
   return (
@@ -45,7 +44,7 @@ export default function Home() {
             </p>
           </div>
           <div className="d-flex align-items-center justify-content-center w-100 button-div">
-            <Button getRandomQuote={getRandomQuote} text={"Get Quote"} />
+            <Button getRandomQuote={getRandomQuote} text={"Generate Quote"} />
           </div>
         </>
       ) : (
@@ -56,9 +55,13 @@ export default function Home() {
             <>
               <CardComponent ref={ref} {...props} />
               <div className="d-flex align-items-center justify-content-center w-100 button-div">
-                <Button getRandomQuote={getRandomQuote} text={"Get Quote"} />
+                <Button
+                  getRandomQuote={getRandomQuote}
+                  text={"Generate Quote"}
+                />
                 <span className="share-button" onClick={() => shareData()}>
                   <AiOutlineDownload />
+                  <p className="share-button-text">Download</p>
                 </span>
               </div>
             </>
@@ -67,7 +70,7 @@ export default function Home() {
       )}
       {/* <Footer /> */}
     </div>
-  );
+  )
 }
 
 const CardComponent = forwardRef((props, ref) => (
@@ -98,4 +101,4 @@ const CardComponent = forwardRef((props, ref) => (
       </p>
     </div>
   </div>
-));
+))

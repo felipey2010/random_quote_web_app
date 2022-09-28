@@ -11,8 +11,8 @@
   align-items: center;
   justify-content: center;
   transition: all 0.3s ease-in-out;
-  overflow-y: auto;
-  vertical-align: middle;
+  /* overflow-y: auto; */
+  /* vertical-align: middle; */
 }
 
 .App h4 {
@@ -29,7 +29,9 @@
 }
 
 .card {
-  box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.05), 0px 1px 4px rgba(0, 0, 0, 0.15);
+  /* box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.05), 0px 1px 4px rgba(0, 0, 0, 0.15); */
+  box-shadow: 0 6px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
   padding: 12px;
   margin: 12px;
 }
@@ -69,16 +71,18 @@
   padding: 8px;
   font-size: 14px;
   border-radius: 0.25rem;
-  border: 2px solid rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(0, 0, 0, 0.25);
   font-weight: 600;
   background-color: #fff;
   transition: all 0.3s ease-in-out;
+  box-shadow: 0 6px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 
 .btn:hover,
 .share-button:hover {
   color: rgba(0, 0, 0, 0.8) !important;
-  border: 2px solid rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(0, 0, 0, 0.35);
 }
 
 .share-button {
@@ -93,14 +97,29 @@
   justify-content: center;
   height: 100%;
   width: 34px;
-  border: 1px solid black;
+  border: 1px solid rgba(0, 0, 0, 0.25);
   color: #6c757d;
   font-weight: 600;
   border-radius: 0.25rem;
-  border: 2px solid rgba(0, 0, 0, 0.25);
   font-weight: 600;
   background-color: #fff;
   transition: all 0.3s ease-in-out;
+  position: relative;
+  box-shadow: 0 6px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.share-button-text {
+  font-size: 0.7rem;
+  color: rgba(0, 0, 0, 0.8);
+  position: absolute;
+  bottom: -36px;
+  display: none;
+  transition: all 0.2s ease-in-out;
+}
+
+.share-button:hover .share-button-text {
+  display: block;
 }
 
 .button-div {
